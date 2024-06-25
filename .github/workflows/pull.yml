@@ -1,0 +1,32 @@
+name: Pull from upstream
+
+on:
+  schedule:
+    - cron: "12 0,7,12,19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  pull-upstream:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure git
+        run: |
+          git config --global user.name 'GS Pull Bot'
+          git config --global user.email 'greeningsiren@gmail.com'
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/tatarski/golf3d.git
+          git fetch upstream
+      - name: Pull from upstream
+        run: |
+          git branch
+          git checkout golf3d
+          git merge upstream/golf3d
+      - name: Push to origin
+        run: git push -u origin golf3d
