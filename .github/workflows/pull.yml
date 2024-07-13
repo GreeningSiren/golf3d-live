@@ -2,7 +2,7 @@ name: Pull from upstream
 
 on:
   schedule:
-    - cron: "12 0,7,12,19 * * *"
+    - cron: "12 2 * * *"
   workflow_dispatch:
 
 permissions:
